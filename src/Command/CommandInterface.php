@@ -28,7 +28,7 @@ interface CommandInterface
     public static function getPermissions(): array;
 
     /**
-     * Returns  Systheme request -> Http request
+     * Returns  System request -> Http request
      *
      * @return mixed|
      */

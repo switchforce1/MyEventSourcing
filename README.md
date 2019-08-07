@@ -1,4 +1,4 @@
-#Informations 
+# Informations 
 
 This project is not a really event sourcing plugins ,
  it is just used for specific private project;
