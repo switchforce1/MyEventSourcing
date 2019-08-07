@@ -1,0 +1,13 @@
+{
+    "name": "prest.dadja/my-event-sourcing",
+    "description": "My event sourcing for zend app",
+    "require": {
+        "php": "^7.3",
+        "psr/http-message": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Switchforce1\\MyEventSourcing\\": "src/"
+        }
+    }
+}
