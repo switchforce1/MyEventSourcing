@@ -56,6 +56,17 @@ abstract class AbstractEntity implements EntityInterface
         }
         $this->command = $command;
         $this->setMode($command->getMode());
+        $this->setData();
+    }
+
+    abstract protected function setData();
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -117,4 +128,6 @@ abstract class AbstractEntity implements EntityInterface
         }
         return !empty(array_intersect($requestPermissions, $this->getPermissions()));
     }
+
+
 }

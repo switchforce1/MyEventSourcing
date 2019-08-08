@@ -39,7 +39,7 @@ interface CommandInterface
      *
      * @return string
      */
-    public function getFunctionalRequestId(): string;
+    public function getFunctionalRequestId(): ?string;
 
     /**
      * Returns old data in update case
@@ -54,6 +54,13 @@ interface CommandInterface
      * @return array
      */
     public function getRequestData(): array;
+
+    /**
+     * Returns the real data to process by the command
+     *
+     * @return array
+     */
+    public function getData();
 
     /**
      * Returns current date

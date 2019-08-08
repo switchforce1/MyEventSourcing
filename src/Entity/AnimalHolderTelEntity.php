@@ -9,12 +9,13 @@
 namespace Switchforce1\MyEventSourcing\Entity;
 use Switchforce1\MyEventSourcing\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
+use Switchforce1\MyEventSourcing\Command\HolderCommand;
 
 /**
  * Class AnimalNameEntity
  * @package Switchforce1\MyEventSourcing\Entity
  */
-class AnimalNameEntity extends AbstractEntity implements EntityInterface
+class AnimalHolderTelEntity extends AbstractEntity implements EntityInterface
 {
 
     /**
@@ -34,21 +35,34 @@ class AnimalNameEntity extends AbstractEntity implements EntityInterface
         $today = (new \DateTime('now'))->format("Y-m-d H:i:s");
         $options = $this->getOptions();
         $data = [];
+
+
         $eventData = [
-            "label" => "Modification du nom de l'animal.",
+            "label" => $this->getEventLabel(),
             "event_type" => $this->getEventType(),
             "request_id" => $this->command->getFunctionalRequestId(),
             "apply_date" => $today,
             "data" => json_encode(["data" => $this->getData()]),
             "action_type" => $this->command->getSystemRequest()? $this->command->getSystemRequest()->getMethod(): $this->command->getMode(),
-            "table_name" => "animal",
+            "table_name" => "contact",
             "row_id" => $options['row_id']?? null,
-            "origin_event_id" => $options['row_id']?? null,
+            "origin_event_id" => $options['origin_event_id']?? null,
             "created_by" => $this->command->getUserId(),
         ];
-
         $data[] = $eventData;
+
         return $data;
+    }
+
+    /**
+     *
+     */
+    protected function setData()
+    {
+        /** @var HolderCommand $command */
+       $command = $this->command;
+       $data = $command->getData()['tel'];
+       $this->data = $data;
     }
 
     /**
@@ -63,7 +77,7 @@ class AnimalNameEntity extends AbstractEntity implements EntityInterface
         if(!$command){
             $command = $this->command;
         }
-        return $command instanceof AnimalCommand;
+        return $command instanceof HolderCommand;
     }
 
     /**
@@ -71,11 +85,7 @@ class AnimalNameEntity extends AbstractEntity implements EntityInterface
      */
     public function getEventType()
     {
-        if($this->mode = self::MODE_INSERT){
-            return 'animal.init.name';
-        }
-
-        return 'animal.update.name';
+        return 'animal.assign.holder.tel';
     }
 
     /**
@@ -83,18 +93,6 @@ class AnimalNameEntity extends AbstractEntity implements EntityInterface
      */
     public function getEventLabel()
     {
-        if($this->mode = self::MODE_INSERT){
-            return 'Assignation du nom';
-        }
-
-        return 'Modification du nom de l\' animal';
-    }
-
-    /**
-     * Set name data
-     */
-    protected function setData()
-    {
-        $this->data = $this->command->getData()['name'];
+        return 'Modification du tel du détenteur .';
     }
 }

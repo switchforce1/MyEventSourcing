@@ -12,7 +12,7 @@ use Switchforce1\MyEventSourcing\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
 use Switchforce1\MyEventSourcing\Command\HolderCommand;
 
-class HolderEntity extends AbstractMixedEntity
+class OwnerEntity extends AbstractMixedEntity
 {
     /**
      * HolderEntity constructor.
@@ -21,14 +21,6 @@ class HolderEntity extends AbstractMixedEntity
     public function __construct(HolderCommand $holderCommand)
     {
         $this->command = $holderCommand;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getData()
-    {
-        return $this->data;
     }
 
     /**
@@ -54,10 +46,10 @@ class HolderEntity extends AbstractMixedEntity
     public function getEventType()
     {
         if($this->mode = self::MODE_INSERT){
-            return 'animal.insert';
+            return 'owner.insert';
         }
 
-        return 'animal.update';
+        return 'owner.update';
     }
 
     /**
@@ -68,10 +60,10 @@ class HolderEntity extends AbstractMixedEntity
     public function getEventLabel()
     {
         if($this->mode = self::MODE_INSERT){
-            return 'Creation d\'un détenteur ';
+            return 'Creation d\'un proprietaire.';
         }
 
-        return 'Modification d\'un détenteur ';
+        return 'Modification d\'un proprietaire.';
     }
 
     /**
@@ -79,18 +71,6 @@ class HolderEntity extends AbstractMixedEntity
      */
     protected function getConfig()
     {
-        /** @var HolderCommand $command */
-        $command = $this->command;
-
-        return [
-            'name' => [
-                'class' => AnimalHolderNameEntity::class,
-                'command' => $command,
-            ],
-            'age' => [
-                'class' => AnimalHolderAgeEntity::class,
-                'command' => $command,
-            ],
-        ];
+        return [];
     }
 }

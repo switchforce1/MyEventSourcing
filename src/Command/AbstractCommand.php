@@ -8,6 +8,7 @@
 
 namespace Switchforce1\MyEventSourcing\Command;
 
+use mysql_xdevapi\Exception;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -42,6 +43,8 @@ class AbstractCommand implements CommandInterface
     protected $requestData;
 
     /**
+     * Real data to process
+     *
      * @var array
      */
     protected $data;
@@ -110,7 +113,7 @@ class AbstractCommand implements CommandInterface
     /**
      * @return string
      */
-    public function getFunctionalRequestId(): string
+    public function getFunctionalRequestId(): ?string
     {
         return $this->functionalRequestId;
     }
@@ -119,7 +122,7 @@ class AbstractCommand implements CommandInterface
      * @param string $functionalRequestId
      * @return AbstractCommand
      */
-    public function setFunctionalRequestId(string $functionalRequestId): AbstractCommand
+    public function setFunctionalRequestId(?string $functionalRequestId): AbstractCommand
     {
         $this->functionalRequestId = $functionalRequestId;
         return $this;
@@ -152,12 +155,15 @@ class AbstractCommand implements CommandInterface
     }
 
     /**
+     * Sets RequestData and data
+     *
      * @param array $requestData
      * @return AbstractCommand
      */
     public function setRequestData(array $requestData): AbstractCommand
     {
         $this->requestData = $requestData;
+        $this->data = $requestData;
         return $this;
     }
 
@@ -213,5 +219,31 @@ class AbstractCommand implements CommandInterface
     {
         $this->userPermissions = $userPermissions;
         return $this;
+    }
+
+    /**
+     * @param AbstractCommand $originCommand
+     * @param AbstractCommand $destinationCommand
+     */
+    public function copy(AbstractCommand $originCommand, AbstractCommand $destinationCommand)
+    {
+        $destinationCommand->setMode($originCommand->getMode());
+        $destinationCommand->setSystemRequest($originCommand->getSystemRequest());
+        $destinationCommand->setFunctionalRequestId($originCommand->getFunctionalRequestId());
+        $destinationCommand->setOldData($originCommand->getOldData());
+        $destinationCommand->setRequestData($originCommand->getRequestData());
+        $destinationCommand->setDate($originCommand->getDate());
+        $destinationCommand->setUserId($originCommand->getUserId());
+        $destinationCommand->setUserPermissions($originCommand->getUserPermissions());
+    }
+
+    /**
+     * Returns the real data to process by the command
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 }

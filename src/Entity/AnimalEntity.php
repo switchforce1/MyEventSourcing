@@ -10,43 +10,14 @@ namespace Switchforce1\MyEventSourcing\Entity;
 
 use Switchforce1\MyEventSourcing\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
+use Switchforce1\MyEventSourcing\Command\HolderCommand;
 
 /**
  * Class AnimalEntity
  * @package Switchforce1\MyEventSourcing\Entity
  */
-class AnimalEntity extends AbstractEntity implements EntityInterface
+class AnimalEntity extends AbstractMixedEntity implements EntityInterface
 {
-    /**
-     * @var CommandInterface
-     */
-    protected $command ;
-
-    /**
-     * AnimalEntity constructor.
-     * @param CommandInterface $command
-     */
-    public function __construct(CommandInterface $command)
-    {
-        $this->command = $command;
-    }
-
-    /**
-     *
-     */
-    protected function init()
-    {
-        $configs = $this->getConfig();
-    }
-
-
-    /**
-     * @param CommandInterface $command
-     */
-    protected function setCommand(CommandInterface $command)
-    {
-        $this->command = $command;
-    }
 
     /**
      * @return array
@@ -65,70 +36,23 @@ class AnimalEntity extends AbstractEntity implements EntityInterface
      */
     protected function getConfig()
     {
+        /** @var AnimalCommand $command */
+        $command = $this->command;
+
         return [
             'name' => [
                 'class' => AnimalNameEntity::class,
-                'command' => $this->command,
+                'command' => $command,
             ],
             'holder' => [
-                HolderEntity::class,
-                'command' => $this->command,
+                'class' => HolderEntity::class,
+                'command' => new HolderCommand($command),
+            ],
+            'owner' => [
+                'class' => OwnerEntity::class,
+                'command' => new HolderCommand($command),
             ]
         ];
-    }
-
-    /**
-     * Returns array of events data that will be insert into database
-     *
-     * @return array
-     * @throws \Exception
-     */
-    public function getEventsData():array
-    {
-        $data = [];
-
-        /**
-         * @var string $node
-         * @var EntityInterface $entity
-         */
-        foreach ($this->getEntities() as $node => $entity){
-            if(!$entity instanceof EntityInterface){
-                throw new \Exception("");
-            }
-            $data = array_merge($data, $entity->getEventsData());
-        }
-
-        return $data;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getEntities(): array
-    {
-        $entities = [];
-        foreach ($this->getConfig() as $node => $config){
-            /** @var string $entityClassName */
-            $entityClassName = $config['class'];
-            /** @var CommandInterface $command */
-            $command = $config['command'];
-
-            /** @var EntityInterface $entity */
-            $entity  =  new $entityClassName($command);
-
-            $entities [$node] = clone $entity;
-            unset($entity);
-        }
-
-        return $entities;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getData()
-    {
-        return $this->command->getRequestData();
     }
 
     /**
