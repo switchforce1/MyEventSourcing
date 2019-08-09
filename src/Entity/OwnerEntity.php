@@ -11,6 +11,10 @@ namespace Switchforce1\MyEventSourcing\Entity;
 use Switchforce1\MyEventSourcing\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
 use Switchforce1\MyEventSourcing\Command\HolderCommand;
+use Switchforce1\MyEventSourcing\Command\OwnerCommand;
+use Switchforce1\MyEventSourcing\Event\AbstractEvent;
+use Switchforce1\MyEventSourcing\Event\CommonScalarEvent;
+use Switchforce1\MyEventSourcing\Event\EventInterface;
 
 class OwnerEntity extends AbstractMixedEntity
 {
@@ -18,9 +22,9 @@ class OwnerEntity extends AbstractMixedEntity
      * HolderEntity constructor.
      * @param HolderCommand $holderCommand
      */
-    public function __construct(HolderCommand $holderCommand)
+    public function __construct(OwnerCommand $ownerCommand)
     {
-        $this->command = $holderCommand;
+        $this->command = $ownerCommand;
     }
 
     /**
@@ -35,7 +39,7 @@ class OwnerEntity extends AbstractMixedEntity
         if(!$command){
             $command = $this->command;
         }
-        return $command instanceof HolderCommand;
+        return $command instanceof OwnerCommand;
     }
 
     /**
@@ -71,6 +75,24 @@ class OwnerEntity extends AbstractMixedEntity
      */
     protected function getConfig()
     {
-        return [];
+        return [
+            "name" => [
+                'class' => CommonScalarEntity::class,
+                'command' => $this->command,
+                'options' => [
+                    "field_name" => "name",
+                    "event_class" => CommonScalarEvent::class,
+                    "command_class" => OwnerCommand::class,
+                    "table_name" => "contact",
+                    "row_id" => $this->command->getRowId(),
+                    "event_type" => function(){
+                        return "animal.name.update";
+                    },
+                    "event_label" => function(){
+                        return "Modification du nom du proprietaire";
+                    },
+                ]
+            ]
+        ];
     }
 }

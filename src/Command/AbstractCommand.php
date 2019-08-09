@@ -246,4 +246,28 @@ class AbstractCommand implements CommandInterface
     {
         return $this->data;
     }
+
+    /**
+     * @return string
+     */
+    public function getRowId()
+    {
+       return 'UNDEFINED';
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableName()
+    {
+        return 'UNDEFINED';
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalEventId()
+    {
+        return 'UNDEFINED';
+    }
 }

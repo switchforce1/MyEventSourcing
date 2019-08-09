@@ -41,8 +41,14 @@ abstract class AbstractMixedEntity extends AbstractEntity
             /** @var CommandInterface $command */
             $command = $config['command'];
 
-            /** @var EntityInterface $entity */
-            $entity  =  new $entityClassName($command);
+
+            if(array_key_exists('options', $config)){
+                /** @var EntityInterface $entity */
+                $entity  =  new $entityClassName($command, $config['options']);
+            }else{
+                /** @var EntityInterface $entity */
+                $entity  =  new $entityClassName($command);
+            }
 
             $entities [$node] = clone $entity;
             unset($entity);

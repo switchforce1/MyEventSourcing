@@ -32,6 +32,11 @@ interface EntityInterface
     /**
      * @return mixed
      */
+    public function getMode();
+
+    /**
+     * @return mixed
+     */
     public function getData();
 
     /**

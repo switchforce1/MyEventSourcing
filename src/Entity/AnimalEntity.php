@@ -11,6 +11,7 @@ namespace Switchforce1\MyEventSourcing\Entity;
 use Switchforce1\MyEventSourcing\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
 use Switchforce1\MyEventSourcing\Command\HolderCommand;
+use Switchforce1\MyEventSourcing\Command\OwnerCommand;
 
 /**
  * Class AnimalEntity
@@ -50,7 +51,7 @@ class AnimalEntity extends AbstractMixedEntity implements EntityInterface
             ],
             'owner' => [
                 'class' => OwnerEntity::class,
-                'command' => new HolderCommand($command),
+                'command' => new OwnerCommand($command),
             ]
         ];
     }
