@@ -21,9 +21,9 @@ $animalData = [
         "tel" => "45 88 78 45 45",
     ],
     "owner" => [
-        "name" => "the holder name",
-        "age" => 121,
-        "tel" => "45 88 78 45 45",
+        "name" => "the owner name",
+        "age" => 88,
+        "tel" => "0000000000000",
     ]
 ];
 /** @var AnimalCommand $animalCommand */

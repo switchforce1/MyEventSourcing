@@ -11,6 +11,7 @@ namespace Switchforce1\MyEventSourcing\Entity;
 use Switchforce1\MyEventSourcing\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
 use Switchforce1\MyEventSourcing\Command\HolderCommand;
+use Switchforce1\MyEventSourcing\Event\CommonScalarEvent;
 
 class HolderEntity extends AbstractMixedEntity
 {
@@ -90,6 +91,23 @@ class HolderEntity extends AbstractMixedEntity
             'age' => [
                 'class' => AnimalHolderAgeEntity::class,
                 'command' => $command,
+            ],
+            "tel" => [
+                'class' => CommonScalarEntity::class,
+                'command' => $this->command,
+                'options' => [
+                    "field_name" => "tel",
+                    "event_class" => CommonScalarEvent::class,
+                    "command_class" => HolderCommand::class,
+                    "table_name" => "contact",
+                    "row_id" => $this->command->getRowId(),
+                    "event_type" => function(){
+                        return "animal.tel.update";
+                    },
+                    "event_label" => function(){
+                        return "Modification du telephone du proprietaire";
+                    },
+                ]
             ],
         ];
     }

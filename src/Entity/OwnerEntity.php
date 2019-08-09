@@ -92,6 +92,40 @@ class OwnerEntity extends AbstractMixedEntity
                         return "Modification du nom du proprietaire";
                     },
                 ]
+            ],
+            "age" => [
+                'class' => CommonScalarEntity::class,
+                'command' => $this->command,
+                'options' => [
+                    "field_name" => "age",
+                    "event_class" => CommonScalarEvent::class,
+                    "command_class" => OwnerCommand::class,
+                    "table_name" => "contact",
+                    "row_id" => $this->command->getRowId(),
+                    "event_type" => function(){
+                        return "animal.age.update";
+                    },
+                    "event_label" => function(){
+                        return "Modification de l'age du proprietaire";
+                    },
+                ]
+            ],
+            "tel" => [
+                'class' => CommonScalarEntity::class,
+                'command' => $this->command,
+                'options' => [
+                    "field_name" => "tel",
+                    "event_class" => CommonScalarEvent::class,
+                    "command_class" => OwnerCommand::class,
+                    "table_name" => "contact",
+                    "row_id" => $this->command->getRowId(),
+                    "event_type" => function(){
+                        return "animal.tel.update";
+                    },
+                    "event_label" => function(){
+                        return "Modification du telephone du proprietaire";
+                    },
+                ]
             ]
         ];
     }
