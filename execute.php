@@ -7,9 +7,9 @@
  */
 require 'vendor/autoload.php';
 
-use Switchforce1\MyEventSourcing\Command\AnimalCommand;
+use Switchforce1\MyEventSourcing\Example\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Entity\AbstractEntity;
-use Switchforce1\MyEventSourcing\Entity\AnimalEntity;
+use Switchforce1\MyEventSourcing\Example\Entity\AnimalEntity;
 
 echo "RUN - With tess data".PHP_EOL;
 

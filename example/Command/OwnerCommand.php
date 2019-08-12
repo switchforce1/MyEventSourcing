@@ -6,7 +6,10 @@
  * Time: 15:35
  */
 
-namespace Switchforce1\MyEventSourcing\Command;
+namespace Switchforce1\MyEventSourcing\Example\Command;
+
+use Switchforce1\MyEventSourcing\Command\AbstractCommand;
+use Switchforce1\MyEventSourcing\Command\CommandInterface;
 
 /**
  * Class AnimalCommand

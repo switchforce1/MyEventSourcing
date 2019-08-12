@@ -6,16 +6,24 @@
  * Time: 13:34
  */
 
-namespace Switchforce1\MyEventSourcing\Entity;
+namespace Switchforce1\MyEventSourcing\Example\Entity;
 
-use Switchforce1\MyEventSourcing\Command\AnimalCommand;
+use Switchforce1\MyEventSourcing\Example\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
-use Switchforce1\MyEventSourcing\Command\HolderCommand;
-use Switchforce1\MyEventSourcing\Command\OwnerCommand;
+use Switchforce1\MyEventSourcing\Example\Command\HolderCommand;
+use Switchforce1\MyEventSourcing\Example\Command\OwnerCommand;
+use Switchforce1\MyEventSourcing\Entity\AbstractMixedEntity;
+use Switchforce1\MyEventSourcing\Entity\AbstractEntity;
+use Switchforce1\MyEventSourcing\Entity\EntityInterface;
 use Switchforce1\MyEventSourcing\Event\AbstractEvent;
 use Switchforce1\MyEventSourcing\Event\CommonScalarEvent;
 use Switchforce1\MyEventSourcing\Event\EventInterface;
+use Switchforce1\MyEventSourcing\Entity\CommonScalarEntity;
 
+/**
+ * Class OwnerEntity
+ * @package Switchforce1\MyEventSourcing\Example\Entity
+ */
 class OwnerEntity extends AbstractMixedEntity
 {
     /**

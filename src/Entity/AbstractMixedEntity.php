@@ -35,9 +35,11 @@ abstract class AbstractMixedEntity extends AbstractEntity
     protected function getEntities(): array
     {
         $entities = [];
+        //print_r($this->getConfig());
         foreach ($this->getConfig() as $node => $config){
             /** @var string $entityClassName */
             $entityClassName = $config['class'];
+            print_r($entityClassName."\n");
             /** @var CommandInterface $command */
             $command = $config['command'];
 

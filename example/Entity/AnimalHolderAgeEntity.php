@@ -6,14 +6,16 @@
  * Time: 13:17
  */
 
-namespace Switchforce1\MyEventSourcing\Entity;
-use Switchforce1\MyEventSourcing\Command\AnimalCommand;
+namespace Switchforce1\MyEventSourcing\Example\Entity;
+use Switchforce1\MyEventSourcing\Example\Command\AnimalCommand;
 use Switchforce1\MyEventSourcing\Command\CommandInterface;
-use Switchforce1\MyEventSourcing\Command\HolderCommand;
+use Switchforce1\MyEventSourcing\Example\Command\HolderCommand;
+use Switchforce1\MyEventSourcing\Entity\AbstractEntity;
+use Switchforce1\MyEventSourcing\Entity\EntityInterface;
 
 /**
  * Class AnimalNameEntity
- * @package Switchforce1\MyEventSourcing\Entity
+ * @package Switchforce1\MyEventSourcing\Example\Entity
  */
 class AnimalHolderAgeEntity extends AbstractEntity implements EntityInterface
 {
